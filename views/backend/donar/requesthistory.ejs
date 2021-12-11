@@ -1,0 +1,60 @@
+<%- include('dashboard.ejs') %>
+<%- include('../partials/flash.ejs')%>
+<h2 class="text-center">My Request History</h2>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Request Group</th>
+            <th>Request units</th>
+            <th>Request to:</th>
+            <th>Avatar</th>
+            <th>Phone Number</th>
+            <th>Status:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(requests.length > 0) { %>
+            <% requests.forEach(request => { %>
+                <tr>
+                    
+                    <td><%= user.name%></td>
+                    <td><%= request.donation.donateGroup.name %></td>
+                    <td><%= request.donation.donateGroup.units %></td>
+                    <td><%= request.donation.userId.name %></td>
+                    <td><img src="/uploads/<%=request.donation.userId.avatar%>" alt="user pic" style="height: 100px; width: 100px;"></td>
+                    <td>
+                        <% if(request.status === 'approved') { %>
+                            <%= request.donation.userId.phone %>
+                        <% } else if(request.status === 'Processing') { %>
+                            <p>Wait for admin reply</p>
+                        <% } else { %>
+                            <p>Sorry</p>
+                        <% } %>
+                    </td>
+                    <td class="btn-group">
+                        <% if(request.status === 'approved') { %>
+                            <button class="btn btn-success"><i class="fas fa-check-circle"></i></button>
+                        <% } else if(request.status === 'Processing') { %>
+                            <button class="btn btn-primary"><i class="fas fa-spinner"></i></button>
+                        <% } else { %>
+                            <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <p>You don't have any requests histroy</p>
+        <% } %>
+    </tbody>
+</table>
+<div class="row mt-10">
+    <div class="col-md-4 m-auto">
+        <ol class="list-group list-group-numbered">
+            <li class="mt-2 list-group-item"><button class="btn btn-success"><i class="fas fa-check-circle"></i></button> :: Approved </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-primary"><i class="fas fa-spinner"></i></button> :: Processing </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-danger"><i class="fas fa-times"></i></button> :: Rejected</li>
+        </ol>
+    </div>
+</div>
+<%- include('footer.ejs') %>

@@ -1,0 +1,60 @@
+<%- include('dashboard.ejs') %>
+<h2 class="text-center">Donations Request</h2>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Disease:</th>
+            <th>Phone:</th>
+            <th>Address:</th>
+            <th>Status:</th>
+            <th>Action</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(donations.length > 0) { %>
+            <% donations.forEach(donation => { %>
+                <tr>
+                    <td><%= donation.userId.name%></td>
+                    <td><%= donation.userId.email%></td>
+                    <td><%= donation.donateGroup.name%></td>
+                    <td><%= donation.donateGroup.units%></td>
+                    <td><%= donation.disease%></td>
+                    <td><%= donation.userId.phone%></td>
+                    <td><%= donation.userId.address%></td>
+                    <td><button class="btn btn-primary"><i class="fas fa-spinner"></i></button></td>
+                    <td class="btn-group">
+                        <form action="/admin/donation/<%= donation.id%>?_method=PUT" method="post">
+                            <input type="hidden" name="status" id="status" value="approved">
+                            <button class="btn btn-success"><i class="fas fa-check-circle"></i></button>
+                        </form>
+                        <form action="/admin/donation/<%= donation.id%>?_method=PUT" method="post">
+                            <input type="hidden" name="status" id="status" value="rejected">
+                            <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/admin/donation/<%= donation.id%>?_method=DELETE" method="post">
+                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <p>You don't have any donations histroy</p>
+        <% } %>
+    </tbody>
+</table>
+<div class="row mt-10">
+    <div class="col-md-4 m-auto">
+        <ol class="list-group list-group-numbered">
+            <li class="mt-2 list-group-item"><button class="btn btn-success"><i class="fas fa-check-circle"></i></button> :: Approved </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-primary"><i class="fas fa-spinner"></i></button> :: Processing </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-danger"><i class="fas fa-times"></i></button> :: Rejected</li>
+        </ol>
+    </div>
+</div>

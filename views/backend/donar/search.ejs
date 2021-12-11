@@ -1,0 +1,48 @@
+<%- include('dashboard.ejs') %>
+<% if(donations.length > 0) { %>
+    
+
+    <div class="row mt-3">
+        <% donations.forEach(donation => { %>
+        <div class="col-md-4 border m-auto">
+            <table class="table">
+                <tr>
+                    <th>Name:</th> <td><%= donation.userId.name %></td>
+                </tr>
+                <tr>
+                    <th>Profile:</th> <td> <% if (typeof donation.userId.avatar !== 'undefined') { %>
+                        <img src="/uploads/<%= donation.userId.avatar %>" alt="Image" style="width: 100px; height:100px;">
+                    <% } else { %>
+                        <p class="lead">No profile</p>
+                    <% }%></td>
+                </tr>
+                <tr>
+                    <th>Address:</th> <td><%= donation.userId.address %></td>
+                </tr>
+                <tr>
+                    <th>Group:</th> <td><%= donation.donateGroup.name %></td>
+                </tr>
+                <tr>
+                    <th>Status:</th> <td> <%= donation.status%></td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="/request/new/<%= donation._id %>" method="post">
+                            <button class="btn btn-danger mb-2" type="Submit">Request to Admin</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <%  })  %>
+        
+    </div>
+        
+    
+<% } else { %>
+    <div class="row mt-4">
+        <div class="col-md-4 m-auto">
+            <h4>No result found</h4>
+        </div>
+    </div>
+<% } %>

@@ -1,0 +1,54 @@
+<%- include('dashboard.ejs') %>
+<h2 class="text-center">Blood Request</h2>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Request By:</th>
+            <th>Image</th>    
+            <th>Request To:</th>
+            <th>Image</th>
+            <th>Status:</th>
+            <th>Action</th>
+            <th>Delete</th>
+        </tr>
+    </thead> 
+    <tbody>
+        <% if(requests.length > 0) { %>
+            <% requests.forEach(request => { %>
+                <tr>
+                    <td><%= request.user.name  %></td>
+                    <td><img src="/uploads/<%= request.user.avatar %>" alt="img" srcset="" style="width: 100px; height: 100px;" ></td>
+                    <td><%= request.donation.userId.name %></td>
+                    <td><img src="/uploads/<%= request.donation.userId.avatar %>" alt="Image" srcset="" height="100px" width="100px"></td>
+                    <td><%= request.status%></td>
+                    <td class="">
+                        <form action="/admin/request/<%= request.id%>?_method=PUT" method="post">
+                            <input type="hidden" name="status" id="status" value="approved">
+                            <button class="btn btn-success"><i class="fas fa-check-circle"></i></button>
+                        </form>
+                        <form action="/admin/request/<%= request.id%>?_method=PUT" method="post">
+                            <input type="hidden" name="status" id="status" value="rejected">
+                            <button class="btn btn-danger mt-2"><i class="fas fa-times"></i></button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/admin/request/<%= request.id%>?_method=DELETE" method="post">
+                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <p>You don't have any request histroy</p>
+        <% } %>
+    </tbody>
+</table>
+<div class="row mt-10">
+    <div class="col-md-4 m-auto">
+        <ol class="list-group list-group-numbered">
+            <li class="mt-2 list-group-item"><button class="btn btn-success"><i class="fas fa-check-circle"></i></button> :: Approved </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-primary"><i class="fas fa-spinner"></i></button> :: Processing </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-danger"><i class="fas fa-times"></i></button> :: Rejected</li>
+        </ol>
+    </div>
+</div>

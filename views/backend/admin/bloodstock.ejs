@@ -1,0 +1,24 @@
+<%- include('dashboard.ejs')%>
+    <div class="row-mt-4">
+        <div class="col-md-6 m-auto">
+            <h3 class="text-center">Add Blood Stock</h3>
+            <form action="/blood/new" class="form mt-5" method="post">
+                <div class="from-group">
+                    <label class="label" for="name">Select Blood Group:</label>
+                    <select class="form-select" name="name" id="name">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select> 
+                </div>
+                <div class="from-group">
+                    <label for="units">Units:</label>
+                    <input type="number" name="units" id="unit" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success mt-4">Submit</button>
+            </form>
+        </div>
+    </div>

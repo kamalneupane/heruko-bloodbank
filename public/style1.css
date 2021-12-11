@@ -1,0 +1,20 @@
+.sidebar-admin{
+    background-color: #9bb4c2;
+    height: 100vh;
+}
+.sidebar-ul{
+    padding: 10px;
+}
+.sidebar-list{
+    padding: 10px;
+    font-size: 20px;
+}
+.sidebar-list > a{
+    text-decoration: none;
+    color: white;
+}
+.custom-nav{
+    color: white;
+    background-color: #784242;
+    
+}

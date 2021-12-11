@@ -1,0 +1,29 @@
+<%- include('dashboard.ejs') %>
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <h3 class="text-center bg-danger">Donate Blood</h3>
+        <form action="/donation/new" method="post" class="form">
+            <div class="form-group">
+                <label for="blood" class="label">Blood Group:</label>
+                
+                <select name="blood" id="" class="form-select">
+                <% bloods.forEach((blood) => { %>
+                    <option value="<%= blood.id %>"><%= blood.name %></option>
+                <% }) %>
+                </select>
+                
+            </div>
+            <div class="form-group">
+                <label for="units">Units in ml:</label>
+                <input type="number" name="units" id="units" class="form-control" placeholder="Units (in ml)">
+            </div>
+            <div class="form-group">
+                <label for="disease" class="label">Disease if any:</label>
+                <input type="text" placeholder="Nothing" name="disease" class="form-control">
+            </div>
+            
+            <button type="submit" class="btn btn-danger mt-2 btn-block">Donate</button>
+        </form>
+    </div>
+</div>
+<%- include('footer.ejs') %>

@@ -1,0 +1,19 @@
+<%- include('dashboard.ejs')%>
+    <div class="row-mt-4">
+        <div class="col-md-6 m-auto">
+            <h3 class="text-center">Edit</h3>
+            <form action="/blood/<%=blood._id %>?_method=PUT" class="form mt-5" method="post">
+                <div class="from-group">
+                    <label for="groupName">Selected Blood Group:</label>
+                    <select class="form-select" name="name" id="name">
+                        <option selected value="<%= blood.name%>"><%= blood.name%></option>
+                    </select>
+                </div>
+                <div class="from-group">
+                    <label for="unit">Unit:</label>
+                    <input type="number" name="units" id="units" value="<%= blood.units%>" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success mt-4">Update</button>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,43 @@
+<%- include('dashboard.ejs') %>
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <h3 class="text-center bg-danger">Request Blood</h3>
+        <form action="/request/new" method="post" class="form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" name="name" value="<%= user.name%>" id="name" placeholder="Enter the name of person who wants to donate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="blood" class="label">Blood Group:</label>
+                
+                <select name="blood" id="" class="form-select">
+                <% bloods.forEach((blood) => { %>
+                    <option value="<%= blood.id %>"><%= blood.name %></option>
+                <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="units">Units in ml:</label>
+                <input type="number" name="units" id="units" class="form-control" placeholder="Units (in ml)">
+            </div>
+            <div class="form-group">
+                <label for="address">Address :</label>
+                <input type="text" name="address" id="Address" class="form-control" placeholder="Enter your address">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" name="phone" placeholder="Enter phone Number">
+            </div>
+            <div class="form-group">
+                <label for="reason" class="label">Reason:</label>
+                <input type="text" placeholder="Nothing" name="reason" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="text" placeholder="Age" name="age" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-danger mt-2 btn-block">Request Blood</button>
+        </form>
+    </div>
+</div>
+<%- include('footer.ejs') %>

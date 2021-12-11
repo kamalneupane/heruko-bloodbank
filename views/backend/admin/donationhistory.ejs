@@ -1,0 +1,53 @@
+<%- include('dashboard.ejs') %>
+<h2 class="text-center">Donations History</h2>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Photo</th>
+            <th>Email</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Disease:</th>
+            <th>Phone:</th>
+            <th>Address:</th>
+            <th>Requested</th>
+            <th>Status:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if(donations.length > 0) { %>
+            <% donations.forEach(donation => { %>
+                <tr>
+                    <td><%= donation.userId.name%></td>
+                    <td><img src="/uploads/<%= donation.userId.avatar %>" alt="Img" srcset="" height="100px" width="100px"></td>
+                    <td><%= donation.userId.email%></td>
+                    <td><%= donation.donateGroup.name%></td>
+                    <td><%= donation.donateGroup.units%></td>
+                    <td><%= donation.disease%></td>
+                    <td><%= donation.userId.phone%></td>
+                    <td><%= donation.userId.address%></td>
+                    <td><%= donation.requested%></td>
+                    <td class="btn-group">
+                        <% if(donation.status === 'approved') { %>
+                            <button class="btn btn-success"><i class="fas fa-check-circle"></i></button>
+                        <% } else { %>
+                            <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <p>No donations histroy</p>
+        <% } %>
+    </tbody>
+</table>
+<div class="row mt-10">
+    <div class="col-md-4 m-auto">
+        <ol class="list-group list-group-numbered">
+            <li class="mt-2 list-group-item"><button class="btn btn-success"><i class="fas fa-check-circle"></i></button> :: Approved </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-primary"><i class="fas fa-spinner"></i></button> :: Processing </li>
+            <li class="mt-2 list-group-item"><button class="btn btn-danger"><i class="fas fa-times"></i></button> :: Rejected</li>
+        </ol>
+    </div>
+</div>
