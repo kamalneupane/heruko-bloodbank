@@ -3,7 +3,7 @@ const Blood = require('../models/blood')
 const Donation = require('../models/donation')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const ErrorHandler = require('../utils/errorHandler')
-
+const sort = { createdAt: -1}
 exports.showRequestForm = catchAsyncErrors ( async (req,res) => {
     const bloods = await Blood.find();
     if(!bloods){
@@ -54,7 +54,7 @@ exports.myRequest = catchAsyncErrors( async (req, res, next) => {
         path: 'donation',
         model: 'Donation',
         populate:{ path: 'userId', model: 'User', select: 'name avatar phone'}
-    })
+    }).sort(sort)
     
     
     res.render('backend/donar/requesthistory', {
@@ -71,7 +71,7 @@ exports.allRequest = catchAsyncErrors( async (req, res, next) => {
                             path: 'donation',
                             model: 'Donation',
                             populate:{ path: 'userId', model: 'User', select: 'name phone avatar'}
-                        }).populate({path: 'user', select:'name avatar'})
+                        }).populate({path: 'user', select:'name avatar'}).sort(sort)
     res.render('backend/admin/requestlist', {
         requests
     })
@@ -82,13 +82,13 @@ exports.requestHistory = catchAsyncErrors(async (req, res, next) => {
                                             path: 'donation',
                                             model: 'Donation',
                                             populate:{ path: 'userId', model: 'User', select: 'name phone avatar'}
-                                        }).populate({path: 'user', select:'name avatar'})
+                                        }).populate({path: 'user', select:'name avatar'}).sort(sort)
     res.render('backend/admin/requesthistory',{
         requests
     })
 })
 
-// update/process request => admin/order/:id
+// update/process request => admin/request/:id
 exports.updateRequest = catchAsyncErrors( async( req, res, next) => {
     const request = await Request.findById(req.params.id);
     if(!request){
@@ -102,14 +102,7 @@ exports.updateRequest = catchAsyncErrors( async( req, res, next) => {
         await request.save();
         return res.redirect('/admin/requests/history')
     }
-    // const  id = request.requestGroup.blood
-    // const unit = request.requestGroup.units
-
-    // updateBlood(id, unit)
-
-    // request.requestGroup.forEach(async item => {
-    //     await updateBlood(item.blood, item.units);
-    // })
+    
 
     request.status = req.body.status
 
@@ -118,14 +111,7 @@ exports.updateRequest = catchAsyncErrors( async( req, res, next) => {
     res.redirect('/admin/requests/history')
 })
 
-// async function updateBlood(id, units){
-//     const blood = await Blood.findById(id);
-//     blood.units = blood.units - units
 
-//     await blood.save({
-//         validateBeforeSave: false
-//     });
-// }
 
 // Delete Request => admin/request/:id
 exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {

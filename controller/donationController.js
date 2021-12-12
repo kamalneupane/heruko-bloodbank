@@ -4,7 +4,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const APIFeatures = require('../utils/apiFeatures')
 const ErrorHandler = require('../utils/errorHandler')
 const donation = require('../models/donation')
-
+const sort = { createdAt: -1}
 
 exports.showDonationForm = catchAsyncErrors ( async (req,res) => {
     const bloods = await Blood.find();
@@ -62,7 +62,7 @@ exports.getSingleDonation = catchAsyncErrors(async(req, res, next) => {
 });
 // get loggedIn user donations => donations/me
 exports.myDonations = catchAsyncErrors(async(req, res, next) => {
-    const donations = await Donation.find({ userId: req.user.id });
+    const donations = await Donation.find({ userId: req.user.id }).sort(sort);
 
     res.render('backend/donar/donationhistory', {
         user: req.user,
@@ -72,7 +72,7 @@ exports.myDonations = catchAsyncErrors(async(req, res, next) => {
 })
 // get all donations => admin/donations
 exports.allDonations = catchAsyncErrors( async(req, res, next) => {
-    const donations = await Donation.find({ status:'Processing' }).populate('userId', 'name email phone address');
+    const donations = await Donation.find({ status:'Processing' }).populate('userId', 'name email phone address').sort(sort);
     res.render('backend/admin/donationlist',{
         donations
     })
@@ -117,7 +117,8 @@ exports.allDonationsDonar = catchAsyncErrors(async (req, res, next) => {
 
 // donation history => admin/donations/history
 exports.donationHistory = catchAsyncErrors(async (req, res, next) => {
-    const donations = await Donation.find({ status : ['rejected' , 'approved'] }).populate('userId','name email avatar phone address');
+    
+    const donations = await Donation.find({ status : ['rejected' , 'approved'] }).populate('userId','name email avatar phone address').sort(sort);
     res.render('backend/admin/donationhistory',{
         donations
     })
